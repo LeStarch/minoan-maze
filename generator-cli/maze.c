@@ -172,13 +172,13 @@ Maze* generate(float density, int dimx, int dimy)
     Maze* maze = allocateMaze(dimx,dimy);
     effective = ((density > 0.5f)?0.5f:
                         ((density < 0.0f)?0.0f:density));
-    printf("Generating: %10d Closest: %10f\r",cnt,closest);
+    fprintf(stderr,"Generating: %10d Closest: %10f\r",cnt,closest);
     while ( ((float)(MAX - maze->threshold)/(float)(MAX)) <= effective )
     {
         if (cnt % 200 == 0)
         {
-            printf("Generating: %10d Closest: %10f\r",cnt,closest);
-            fflush(stdout);
+            fprintf(stderr,"Generating: %10d Closest: %10f\r",cnt,closest);
+            fflush(stderr);
         }
         cnt++;
         for (i = 0; i < maze->dimx; i++)
@@ -197,8 +197,8 @@ Maze* generate(float density, int dimx, int dimy)
         maze->threshold = calculateNavigationThreshold(maze);
         closest = max(closest,((float)(MAX - maze->threshold)/(float)(MAX)));
     }
-    printf("Generating: %10d Closest: %10f\r",cnt,closest);
-    printf("\n");
+    fprintf(stderr,"Generating: %10d Closest: %10f\r",cnt,closest);
+    fprintf(stderr,"\n");
     return maze;
 }
 
