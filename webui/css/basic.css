@@ -1,0 +1,21 @@
+/**
+ * Set the body, and html to not-overflow yet take up the whole
+ * display area.
+ */
+html, body
+{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+/**
+ * Set the viewport to also fill the whole area
+ */
+#viewport
+{
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
