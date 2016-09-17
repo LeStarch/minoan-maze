@@ -15,6 +15,7 @@ def launch(maze):
     app.config.from_object(Config)
     api = flask_restful.Api(app)
     api.add_resource(MazeResource,"/maze",resource_class_args=[maze])
+    api.add_resource(CharactersResource,"/characters",resource_class_args=[maze])
     app.run(debug=True)
 
 class Config(object):
@@ -30,4 +31,16 @@ class MazeResource(flask_restful.Resource):
     def get(self):
         '''
         '''
-        return self.maze
+        return self.maze.map
+class CharactersResource(flask_restful.Resource):
+    '''
+    '''
+    def __init__(self,maze):
+        '''
+        '''
+        self.maze = maze
+    def get(self):
+        '''
+        '''
+        return self.maze.characters
+    

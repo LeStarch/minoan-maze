@@ -9,6 +9,31 @@ html, body
     height: 100%;
     margin: 0;
     padding: 0;
+    display: table;
+}
+.horizontal-pane-left
+{
+    display: table-cell;
+    width: 70%;
+    height: 100%;
+}
+.horizontal-pane-right
+{
+    display: table-cell;
+    width: 30%;
+    height: 100%;
+}
+#code
+{
+    height: 100%;
+    vertical-align: top;
+}
+textarea
+{
+    display: block;
+    height: 60%;
+    width: 90%;
+    margin: auto;
 }
 /**
  * Set the viewport to also fill the whole area
@@ -19,3 +44,4 @@ html, body
     height: 100%;
     touch-action: none;
 }
+

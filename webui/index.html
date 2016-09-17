@@ -5,10 +5,30 @@
     <title>Minoan Maze</title>
     <link rel="stylesheet" type="text/css" href="css/basic.css">
     <script src="js/dist-babylon/babylon.2.4.js"></script>
-    <script type="text/javascript" src="js/map-temp.js"></script>
-    <script type="text/javascript" src="js/game.js"></script>
+	<script src="js/map-temp.js"></script>
+	<script src="js/ajax.js"></script>
+	<script src="js/game.js"></script>
+	<script src="js/player.js"></script>
+	<script src="js/minotaur.js"></script>
+	<script src="js/map.js"></script>
+	<script src="js/code.js"></script>
+
   </head>
   <body>
-    <canvas id="viewport"></canvas>
+    <div class="horizontal-pane-left">
+        <canvas id="viewport"></canvas>
+    </div>
+    <div id="code" class="horizontal-pane-right">
+      <code>
+      function(cells) {
+      <textarea id="code-area">
+      </textarea>
+      };
+      </code>
+      <br/>
+      Errors:
+      <div id="errors">
+      </div>
+    </div>
   </body>
 </html>
