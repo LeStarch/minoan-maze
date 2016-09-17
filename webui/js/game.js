@@ -10,6 +10,7 @@ P_DIA = 1;
 WALL_TEXTURE_COUNT = 1;
 GROUND_TEXTURE_COUNT = 1;
 LOCAL_SIZE = 3;
+STEP = Math.PI/100.0;
 
 
 /**
@@ -39,6 +40,7 @@ function setup(map)
     var scene = new BABYLON.Scene(engine);
     map.renderSetup(scene);
     player.renderSetup(scene);
+    player.camera.attachControl(canvas, false);
 
     //Enter the render-loop
     engine.runRenderLoop(
