@@ -44,7 +44,7 @@ function Map(maze)
 			//Return fill tiles if outsize actual data
 			if (x < 0 || x >= _self.maze[0].length || y < 0 || y >= _self.maze.length)
 			{
-				return {"type":{"name":"moat"}};
+				return "moat";
 			}
 			return _self.maze[y][x].type.name;
 		};
