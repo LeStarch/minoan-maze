@@ -42,11 +42,11 @@ function Map(maze)
 		function(x,y)
 		{
 			//Return fill tiles if outsize actual data
-			if (x < 0 || x >= _self.maze.length || y < 0 || y >= _self.maze[0].length)
+			if (x < 0 || x >= _self.maze[0].length || y < 0 || y >= _self.maze.length)
 			{
-				return {};
+				return {"type":{"name":"moat"}};
 			}
-			return _self.maze[x][y];
+			return _self.maze[y][x];
 		};
 	_self.getFullMaze =
 		/**
@@ -76,21 +76,21 @@ function Map(maze)
 		        for (var j = 0; j < _self.maze[0].length; j++)
 		        {
 		        	//Path holds ground
-		        	if (_self.maze[i][j].type.name == "path")
+		        	if (_self.maze[j][i].type.name == "path")
 		        	{	
 			        	//Setup ground for this tile
 					    var ground = BABYLON.Mesh.CreateGround('tera-'+i+"-"+j, X_SCALE, Y_SCALE, 1, scene);
 					    ground.position.x = (i*X_SCALE)+X_SCALE/2;
-					    ground.position.z = (j*Y_SCALE)+Y_SCALE/2;
+					    ground.position.z = -((j*Y_SCALE)+Y_SCALE/2);
 					    ground.material = _self.getRandomMaterial("ground");
 					    ground.checkCollisions = true;
 		        	}
-		        	else if (_self.maze[i][j].type.name == "wall")
+		        	else if (_self.maze[j][i].type.name == "wall")
 		        	{
 					    var box = BABYLON.Mesh.CreateBox("box-"+i+"-"+j, X_SCALE, scene);
 			        	box.position.x = (i*X_SCALE)+X_SCALE/2;
 		                box.position.y = Z_SCALE/2;
-		                box.position.z = (j*Y_SCALE)+Y_SCALE/2;
+		                box.position.z = -((j*Y_SCALE)+Y_SCALE/2);
 		                box.material = _self.getRandomMaterial("wall");
 		                box.checkCollisions = true;
 		            }

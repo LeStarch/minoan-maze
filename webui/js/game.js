@@ -6,11 +6,11 @@ Y_SCALE=3;
 Z_SCALE=3;
 MAGNITUDE=0.1;
 P_HEIGHT = 2;
-P_DIA = 1;
+P_DIA = 2;
 WALL_TEXTURE_COUNT = 1;
 GROUND_TEXTURE_COUNT = 1;
 LOCAL_SIZE = 3;
-STEP = Math.PI/100.0;
+STEP = Math.PI/30.0;
 
 
 /**
@@ -27,6 +27,7 @@ function setup(map)
 {
     var canvas = document.getElementById("viewport");
     var engine = new BABYLON.Engine(canvas,true);
+    document.getElementById("run").onclick = evalCode;
     //Resize the canvas on window size change
     window.addEventListener('resize',
         function() {
@@ -40,13 +41,13 @@ function setup(map)
     var scene = new BABYLON.Scene(engine);
     map.renderSetup(scene);
     player.renderSetup(scene);
-    player.camera.attachControl(canvas, false);
+    //player.camera.attachControl(canvas, false);
 
     //Enter the render-loop
     engine.runRenderLoop(
         function()
         {
-        	player.animationLoop(map);
+            player.animationLoop(map);
             scene.render();
         }
     );

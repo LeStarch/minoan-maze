@@ -5,9 +5,10 @@
 function Player()
 {
 	var _self = this;
-	_self.x = 0.5;
-	_self.y = 1.5;
+	_self.x = 1.5;//0.5;
+	_self.y = 0.5;//1.5;
 	_self.dir = 3.0*Math.PI/2.0;
+	_self.grid = new Grid("grid");
 	
 	_self.renderSetup =
 		/**
@@ -16,7 +17,7 @@ function Player()
 		 */
 		function(scene)
 		{
-			var vector = new BABYLON.Vector3(X_SCALE*_self.x, P_HEIGHT/2, Y_SCALE*_self.y);
+			var vector = new BABYLON.Vector3(X_SCALE*_self.x, P_HEIGHT/2, -Y_SCALE*_self.y);
 			_self.model = BABYLON.Mesh.CreateCylinder("player-form", P_HEIGHT, P_DIA, P_DIA,8,1,scene);
 			
 			_self.model.ellipsoid = new BABYLON.Vector3(P_DIA/2, P_HEIGHT, P_DIA/2);
@@ -34,7 +35,7 @@ function Player()
 		    var torch = new BABYLON.PointLight("torch", vector, scene);
 		    torch.diffuse = new BABYLON.Color3(1, 1, 1);
 		    torch.specular = new BABYLON.Color3(1, 1, 1);
-		    torch.range = P_DIA * 5;
+		    torch.range = P_DIA * 2;
 	
 		    //Camera and torch bound to vector
 		    torch.position = vector;
@@ -49,7 +50,8 @@ function Player()
 		function(map)
 		{
 			var local = map.getLocalGrid(Math.floor(_self.x),Math.floor(_self.y));
-		    var theta = codeHarvester();
+			_self.grid.render(local);
+		    var theta = runCode(local);
 		    if (theta != null)
 		    {
 		    	//Normalize theta
@@ -67,15 +69,15 @@ function Player()
 		        else
 		        {
 		        	_self.dir = theta;
-			        var movement = new BABYLON.Vector3(-MAGNITUDE*Math.sin(_self.dir), 0, MAGNITUDE*Math.cos(_self.dir));
+			        var movement = new BABYLON.Vector3(MAGNITUDE*Math.cos(_self.dir), 0, MAGNITUDE*Math.sin(_self.dir));
 			        _self.model.moveWithCollisions(movement);
 		        }
 		    }
-		    _self.camera.rotation.y = -_self.dir;
+		    _self.camera.rotation.y = -(_self.dir-Math.PI/2);
 		    _self.camera.position.x = _self.model.position.x;
 		    _self.camera.position.z = _self.model.position.z;
 		    _self.x = _self.model.position.x/X_SCALE;
-		    _self.y = _self.model.position.y/Y_SCALE;
+		    _self.y = -_self.model.position.z/Y_SCALE;
 		};
 }
 //Normalize angle

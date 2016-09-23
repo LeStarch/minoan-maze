@@ -1,14 +1,17 @@
-FUNCTION=null;
-//function(){};
+FUNCTION=function(){return null;}
 
-function codeHarvester()
+function evalCode()
 {
-    var text = "FUNCTION = function(cell) {"+document.getElementById("code-area").value+"}";
+	var text = "FUNCTION = function(cell) {"+document.getElementById("code-area").value+"}";
+    eval(text);
+}
+
+function runCode(local)
+{
     try
     {
-        eval(text);
-        var tmp = FUNCTION();
-        document.getElementById("errors").innerHTML = "";
+        var tmp = FUNCTION(local);
+    	document.getElementById("errors").innerHTML = "";
         return tmp;
     }
     catch(e)

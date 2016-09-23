@@ -35,6 +35,11 @@ textarea
     width: 90%;
     margin: auto;
 }
+#grid
+{
+    width: 100%;
+    display: inline-block;
+}
 /**
  * Set the viewport to also fill the whole area
  */
