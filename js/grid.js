@@ -4,13 +4,13 @@ function Grid(id)
 	var _self = this;
 	//Set the grid element that we are going to render to
 	_self.canvas = document.getElementById(id);
-	
+
 	_self.render =
 		/**
 		 * Render the gird object to the grid canvas
 		 * @param grid - NxN grid project
 		 */
-		function(grid)
+		function(grid,x,y,angle)
 		{
 			var context = _self.canvas.getContext("2d");
 			var height = context.canvas.height;
@@ -29,5 +29,12 @@ function Grid(id)
 					context.stroke();
 				}
 			}
+                        var locX = (x-Math.floor(x))*size+size;
+                        var locY = (y-Math.floor(y))*size+size;
+                        
+                        context.moveTo(locX,locY);
+                        locX = locX + size*Math.cos(angle);
+                        locY = locY - size*Math.sin(angle);
+                        context.lineTo(locX,locY);
 		};
 };

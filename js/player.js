@@ -50,7 +50,7 @@ function Player()
 		function(map)
 		{
 			var local = map.getLocalGrid(Math.floor(_self.x),Math.floor(_self.y));
-			_self.grid.render(local);
+			_self.grid.render(local,_self.x,_self.y,_self.dir);
 		    var theta = runCode(local);
 		    if (theta != null)
 		    {
