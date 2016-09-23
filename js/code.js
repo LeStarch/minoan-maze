@@ -2,7 +2,7 @@ FUNCTION=function(){return null;}
 
 function evalCode()
 {
-	var text = "FUNCTION = function(cell) {"+document.getElementById("code-area").value+"}";
+	var text = "FUNCTION = function(cells) {"+document.getElementById("code-area").value+"}";
     eval(text);
 }
 
