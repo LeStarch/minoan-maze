@@ -48,6 +48,11 @@ function setup(map)
         function()
         {
             player.animationLoop(map);
+            //Check win condition
+            if (player.y > map.maze.length-1)
+            {
+                document.getElementById("overlay").innerHTML = "<h2>You Won! Wunderbar!</h2>";
+            }
             scene.render();
         }
     );

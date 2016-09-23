@@ -13,6 +13,7 @@ function Grid(id)
 		function(grid,x,y,angle)
 		{
 			var context = _self.canvas.getContext("2d");
+			context.clearRect(0,0,_self.canvas.width,_self.canvas.height);
 			var height = context.canvas.height;
 			var width = context.canvas.width;
 			var size = height/grid.length;
@@ -31,7 +32,7 @@ function Grid(id)
 			}
                         var locX = (x-Math.floor(x))*size+size;
                         var locY = (y-Math.floor(y))*size+size;
-                        
+                        context.beginPath(); 
                         context.moveTo(locX,locY);
                         locX = locX + size*Math.cos(angle);
                         locY = locY - size*Math.sin(angle);

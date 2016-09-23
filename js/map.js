@@ -69,6 +69,12 @@ function Map(maze)
 			var light = new BABYLON.HemisphericLight('sun', new BABYLON.Vector3(0,1,0), scene);
 			light.diffuse = new BABYLON.Color3(0.25, 0.10, 0.10);
 			//light.specular = new BABYLON.Color3(1, 1, 1);
+					    var ground = BABYLON.Mesh.CreateGround('tera', X_SCALE, Y_SCALE, 1, scene);
+					    ground.material = _self.getRandomMaterial("ground");
+					    ground.checkCollisions = true;
+					    var box = BABYLON.Mesh.CreateBox("box-", X_SCALE, scene);
+		                box.material = _self.getRandomMaterial("wall");
+		                box.checkCollisions = true;
 
 		    
 		    for (var i = 0; i < _self.maze.length; i++)
@@ -77,22 +83,20 @@ function Map(maze)
 		        {
 		        	//Path holds ground
 		        	if (_self.maze[j][i].type.name == "path")
-		        	{	
+		        	{
+                                        var tmp = ground.createInstance("index:"+i+"-"+j);
 			        	//Setup ground for this tile
-					    var ground = BABYLON.Mesh.CreateGround('tera-'+i+"-"+j, X_SCALE, Y_SCALE, 1, scene);
-					    ground.position.x = (i*X_SCALE)+X_SCALE/2;
-					    ground.position.z = -((j*Y_SCALE)+Y_SCALE/2);
-					    ground.material = _self.getRandomMaterial("ground");
-					    ground.checkCollisions = true;
-		        	}
+					    tmp.position.x = (i*X_SCALE)+X_SCALE/2;
+					    tmp.position.z = -((j*Y_SCALE)+Y_SCALE/2);
+		    			tmp.checkCollisions = true;
+			    	}
 		        	else if (_self.maze[j][i].type.name == "wall")
 		        	{
-					    var box = BABYLON.Mesh.CreateBox("box-"+i+"-"+j, X_SCALE, scene);
-			        	box.position.x = (i*X_SCALE)+X_SCALE/2;
-		                box.position.y = Z_SCALE/2;
-		                box.position.z = -((j*Y_SCALE)+Y_SCALE/2);
-		                box.material = _self.getRandomMaterial("wall");
-		                box.checkCollisions = true;
+                                        var tmp = box.createInstance("index:"+i+"-"+j);
+			        	tmp.position.x = (i*X_SCALE)+X_SCALE/2;
+		                tmp.position.y = Z_SCALE/2;
+		                tmp.position.z = -((j*Y_SCALE)+Y_SCALE/2);
+		    			tmp.checkCollisions = true;
 		            }
 		        }
 		    }

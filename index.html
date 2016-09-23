@@ -18,10 +18,13 @@
   <body>
     <div class="horizontal-pane-left">
         <canvas id="viewport"></canvas>
+        <div id="overlay">
+            <h2 id="message">Solve the Maze</h2>
+        </div>
     </div>
     <div id="code" class="horizontal-pane-right">
       <canvas id="grid"></canvas>
-      <button id="run">Run</button>
+      <div><button id="run">Run</button></div>
       <code>
       function(cells) {
       <textarea id="code-area">
