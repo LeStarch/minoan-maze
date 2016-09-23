@@ -7,7 +7,9 @@ function Player()
 	var _self = this;
 	_self.x = 1.5;//0.5;
 	_self.y = 0.5;//1.5;
-	_self.dir = 3.0*Math.PI/2.0;
+        _self.dest = [_self.x,_self.y];
+ 	_self.dir = 3.0*Math.PI/2.0;
+        _self.theta = null;
 	_self.grid = new Grid("grid");
 	
 	_self.renderSetup =
@@ -51,13 +53,26 @@ function Player()
 		{
 			var local = map.getLocalGrid(Math.floor(_self.x),Math.floor(_self.y));
 			_self.grid.render(local,_self.x,_self.y,_self.dir);
-		    var theta = runCode(local);
-		    if (theta != null)
+                    if (_self.fuzzyCheck())
+                    {
+		        _self.theta = runCode(local);
+                        if (_self.theta != null)
+                        {
+                            var newX = _self.dest[0] + Math.cos(_self.theta);
+                            var newY = _self.dest[1] - Math.sin(_self.theta);
+                            if (map.getTile(Math.floor(newX),Math.floor(newY)) == "path")
+                            {
+                                _self.dest[0] = newX;
+                                _self.dest[1] = newY;
+                            }
+                        }
+                    }
+		    if (_self.theta != null)
 		    {
 		    	//Normalize theta
-		    	theta = normalize(theta);
+		    	_self.theta = normalize(_self.theta);
 		        //Smoothed rotations
-		        var diff =normalize(_self.dir - theta);
+		        var diff =normalize(_self.dir - _self.theta);
 		        if ( diff < Math.PI && diff > STEP)
 		        {
 		        	_self.dir = normalize(_self.dir - STEP);
@@ -68,9 +83,21 @@ function Player()
 		        }
 		        else
 		        {
-		        	_self.dir = theta;
-			        var movement = new BABYLON.Vector3(MAGNITUDE*Math.cos(_self.dir), 0, MAGNITUDE*Math.sin(_self.dir));
-			        _self.model.moveWithCollisions(movement);
+		        	_self.dir = _self.theta;
+                                var dist = Math.sqrt(Math.pow(_self.x - _self.dest[0],2)+Math.pow(_self.y - _self.dest[1],2));
+                                if (MAGNITUDE < dist)
+                                {
+                                    dist = MAGNITUDE;
+                                }
+                                else
+                                {
+                                    dist = dist;
+                                }
+                                if(!_self.fuzzyCheck())
+                                {
+			            var movement = new BABYLON.Vector3(dist*Math.cos(_self.dir), 0, dist*Math.sin(_self.dir));
+			            _self.model.moveWithCollisions(movement);
+                                }
 		        }
 		    }
 		    _self.camera.rotation.y = -(_self.dir-Math.PI/2);
@@ -79,7 +106,20 @@ function Player()
 		    _self.x = _self.model.position.x/X_SCALE;
 		    _self.y = -_self.model.position.z/Y_SCALE;
 		};
+    _self.fuzzyCheck =
+        /**
+         * Fuzzy check destination
+         */
+        function()
+        {
+            if (Math.abs(_self.x-_self.dest[0]) < 0.01 && Math.abs(_self.y-_self.dest[1]) < 0.01)
+            {
+                return true;
+            }
+            return false;
+        };
 }
+
 //Normalize angle
 function normalize(theta)
 {
