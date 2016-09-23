@@ -23,7 +23,7 @@ function Grid(id)
 				for (var j = 0; j < grid[0].length; j++)
 				{
 					var cell = grid[i][j];
-					context.fillStyle = (cell.type.name == "wall") ? "#FF0000" : (cell.type.name == "moat") ? "#0000FF" : "#FFFFFF";
+					context.fillStyle = (cell == "wall") ? "#FF0000" : (cell == "moat") ? "#0000FF" : "#FFFFFF";
 					context.fillRect(i*size,j*size,size,size);
 					context.rect(i*size,j*size,size,size);
 					context.stroke();

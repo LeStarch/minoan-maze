@@ -46,7 +46,7 @@ function Map(maze)
 			{
 				return {"type":{"name":"moat"}};
 			}
-			return _self.maze[y][x];
+			return _self.maze[y][x].type.name;
 		};
 	_self.getFullMaze =
 		/**
