@@ -212,7 +212,7 @@ int main(int argc, char** argv)
 {
     Maze* maze;
     srand(time(NULL));
-    maze = generate(0.40f,50,50);
+    maze = generate(0.35f,100,100);
     printMaze(maze);    
     freeMaze(maze);
 }
