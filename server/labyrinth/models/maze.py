@@ -71,14 +71,24 @@ class Maze(object):
                     ret[i][j] = self.map[mI][mJ]
         return ret
     @staticmethod
-    def printMazeArray(maze):
+    def printMazeArray(maze, characters=[]):
         '''
         Print out a maze array
         @param maze - maze array (of tiles) to print to terminal
         '''
+        x = 0
+        y = 0
+        print([(c.x, c.y) for c in characters])
         for row in maze:
             for col in row:
-                print(col.type.getCharacters(),end="")
+                pchars = col.type.getCharacters()
+                for actor in characters:
+                    if actor.x == x and actor.y == y:
+                        pchars = actor.name[0:2]
+                print(pchars,end="")
+                x = x + 1
+            x = 0
+            y = y + 1
             print()
 class Tile(object):
     '''

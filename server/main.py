@@ -1,12 +1,14 @@
+#!/usr/bin/env python3
 '''
 Created on Aug 30, 2016
 
 @author: starchmd
 '''
 import sys
-import labyrinth.maze
-import labyrinth.rest
-import labyrinth.character
+import labyrinth.models.maze
+#import labyrinth.rest
+import labyrinth.models.character
+import labyrinth.sim.simulator
 
 def usage(error=""):
     '''
@@ -23,9 +25,11 @@ if __name__ == '__main__':
     if len(sys.argv) != 2:
         usage("Missing maze file")
         sys.exit(-1)
-    maze = labyrinth.maze.Maze(sys.argv[1])
+    maze = labyrinth.models.maze.Maze(sys.argv[1])
     maze.printMazeArray(maze.map)
     maze.printMazeArray(maze.getVisibleCells(25, 25,25))
-    maze.addCharacter(labyrinth.character.Character.makeCharacter(maze, "The Starch"))
-    maze.addCharacter(labyrinth.character.Character.makeCharacter(maze))
-    labyrinth.rest.launch(maze)
+    maze.addCharacter(labyrinth.models.character.Character.makeCharacter(maze, "The Starch"))
+    maze.addCharacter(labyrinth.models.character.Character.makeCharacter(maze))
+    sim = labyrinth.sim.simulator.Simulator(maze)
+    sim.start() 
+    #labyrinth.rest.launch(maze)
