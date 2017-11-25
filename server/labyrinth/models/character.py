@@ -5,17 +5,8 @@ Created on Sep 3, 2016
 @author: starchmd
 '''
 CIRCLE='''
-def circle(input): 
-  yield DOWN
-  yield DOWN
-  yield DOWN
-  yield RIGHT
-  yield RIGHT
-  yield RIGHT
-  yield UP
-  yield UP
-  yield LEFT
-  yield LEFT
+def execution(input): 
+  return choice([LEFT, RIGHT, UP, DOWN])
 '''
 class Character(object):
     '''

@@ -9,6 +9,7 @@ import labyrinth.models.maze
 #import labyrinth.rest
 import labyrinth.models.character
 import labyrinth.sim.simulator
+import labyrinth.exchange
 
 def usage(error=""):
     '''
@@ -18,6 +19,7 @@ def usage(error=""):
     if error != "":
         print("[ERROR] {0}".format(error),file=sys.stderr)
     print("Usage:\n\t{0} <maze-file>".format(sys.argv[0]),file=sys.stderr)
+
 if __name__ == '__main__':
     '''
     Main program for the maze program
@@ -26,10 +28,11 @@ if __name__ == '__main__':
         usage("Missing maze file")
         sys.exit(-1)
     maze = labyrinth.models.maze.Maze(sys.argv[1])
-    maze.printMazeArray(maze.map)
-    maze.printMazeArray(maze.getVisibleCells(25, 25,25))
+    #maze.printMazeArray(maze.map)
+    #maze.printMazeArray(maze.getVisibleCells(25, 25,25))
     maze.addCharacter(labyrinth.models.character.Character.makeCharacter(maze, "The Starch"))
-    maze.addCharacter(labyrinth.models.character.Character.makeCharacter(maze))
-    sim = labyrinth.sim.simulator.Simulator(maze)
-    sim.start() 
+    #maze.addCharacter(labyrinth.models.character.Character.makeCharacter(maze))
+    sim = labyrinth.sim.simulator.Simulator(maze, labyrinth.exchange.ExchangerServer())
+    sim.run()
+    #sim.start() 
     #labyrinth.rest.launch(maze)

@@ -9,33 +9,30 @@ import time
 import traceback
 import threading
 
-from labyrinth.sim.evil import UnsafeExecutor
+from labyrinth.sim.executor import Executor
 
 class Simulator(threading.Thread):
     '''
     A simulator class used to run the maze simulations based on a map and a set of
     characters
     '''
-    def __init__(self, maze):
+    def __init__(self, maze, exchanger):
         '''
         Initialize the simulator
         '''
         threading.Thread.__init__(self)
         self.maze = maze
         self.exit = False
-        self.executor = UnsafeExecutor()
+        self.executor = Executor()
+        self.exchanger = exchanger
     def run(self):
         '''
         The run method for this thread
         '''
         while not self.exit:
-            for actor in self.maze.characters:
-                try:
-                    self.executor.execute(self.maze, actor)
-                except Exception as exc:
-                    print("[ERROR] Failed to execute actor: {0} with {1}:{2}".format(actor.name, type(exc), str(exc)),
-                          file=sys.stderr)
-                    traceback.print_exc()
+            self.executor.chunk(self.maze, self.maze.characters)
             os.system("cls" if os.name == "nt" else "clear")
             self.maze.printMazeArray(self.maze.map, self.maze.characters)
-            time.sleep(0.020)
+            self.exchanger.update(self.maze)
+            self.exchanger.publish(self.maze)
+            time.sleep(0.820)
