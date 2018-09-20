@@ -2,8 +2,6 @@
  * Entry point and script start for the
  *
  */
-
-
 var MAP_URL = "http://127.0.0.1:5000/maze";
 var CHARS_URL = "http://127.0.0.1:5000/characters";
 var GRID = null;
@@ -11,25 +9,39 @@ var GRID = null;
  * Renderer the result of the map call
  * @param map: map to render
  */
-function mapUpdater(map)
+function mapUpdater(continuous, map)
 {
     GRID.setMaze(map);
+    if (continuous)
+    {
+        requestUpdate(true, false, continuous);
+    }
 }
 /**
  * Renderer the result of the character call
  * @param characters: characters to render
  */
-function charsUpdater(characters)
+function charsUpdater(continuous, characters)
 {
     GRID.setCharacters(characters);
+    if (continuous)
+    {
+        requestUpdate(false, true, continuous);
+    }
 }
 /**
  * Request updates from server
  */
-function requestUpdate()
+function requestUpdate(map, chars, continuous)
 {
-    ajaxJSON(MAP_URL, mapUpdater);
-    ajaxJSON(CHARS_URL, charsUpdater);
+    if (map)
+    {
+        ajaxJSON(MAP_URL, mapUpdater.bind(undefined, continuous));
+    }
+    if (chars)
+    {
+        ajaxJSON(CHARS_URL, charsUpdater.bind(undefined, continuous));
+    }
 }
 /**
  * Entry point of the program triggered from the "onReady" event of the dom
@@ -38,6 +50,5 @@ function requestUpdate()
 function main()
 {
     GRID = new Grid("grid");
-    setInterval(requestUpdate, 200);
-    requestUpdate();
+    requestUpdate(true, true, true);
 }
